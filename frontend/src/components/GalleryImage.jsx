@@ -14,11 +14,13 @@ import { ImageState } from '../ImageContext';
 function GalleryImage({ src, id, label }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isInvalid, setIsInvalid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { serverURL, setImageData } = ImageState();
   const toast = useToast();
   const handleDelete = async (password) => {
     try {
+      setIsLoading(true);
       const res = await fetch(`${serverURL}/images/${id}`, {
         method: 'DELETE',
         headers: {
@@ -27,7 +29,10 @@ function GalleryImage({ src, id, label }) {
         body: JSON.stringify({ password }),
       });
       const { success } = await res.json();
-      if (!success) return setIsInvalid(true);
+      if (!success) {
+        setIsLoading(false);
+        return setIsInvalid(true);
+      }
       setImageData((prev) => prev.filter((val) => val._id !== id));
       toast({
         title: 'Deleted Successfully',
@@ -35,8 +40,10 @@ function GalleryImage({ src, id, label }) {
         duration: 9000,
         isClosable: true,
       });
+      setIsLoading(false);
       onClose();
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -52,6 +59,7 @@ function GalleryImage({ src, id, label }) {
         isOpen={isOpen}
         onClose={onClose}
         onDelete={handleDelete}
+        isLoading={isLoading}
         isInvalid={isInvalid}
       />
       {isHovered && (

@@ -13,8 +13,9 @@ import {
 import PropTypes from 'prop-types'; // ES6
 import { useState } from 'react';
 
-function DeleteModal({ isOpen, onClose, onDelete, isInvalid }) {
+function DeleteModal({ isOpen, onClose, onDelete, isInvalid, isLoading }) {
   const [password, setPassword] = useState('');
+
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -41,7 +42,11 @@ function DeleteModal({ isOpen, onClose, onDelete, isInvalid }) {
           <Button mr={3} onClick={onClose} variant='ghost'>
             Cancel
           </Button>
-          <Button colorScheme='red' onClick={() => onDelete(password)}>
+          <Button
+            colorScheme='red'
+            onClick={() => onDelete(password)}
+            isLoading={isLoading}
+          >
             Delete
           </Button>
         </ModalFooter>
@@ -54,6 +59,7 @@ DeleteModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   isInvalid: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default DeleteModal;

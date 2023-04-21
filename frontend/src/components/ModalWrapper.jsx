@@ -22,9 +22,11 @@ function ModalWrapper({ isOpen, onClose }) {
   const [label, setLabel] = useState('');
   const [url, setUrl] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit() {
     try {
+      setIsLoading(true);
       const res = await fetch(`${serverURL}/upload`, {
         method: 'POST',
         headers: {
@@ -47,8 +49,10 @@ function ModalWrapper({ isOpen, onClose }) {
       setLabel('');
       setUrl('');
       onClose();
+      setIsLoading(false);
       isInvalid(false);
     } catch (error) {
+      setIsLoading(false);
       setLabel('');
       setUrl('');
       onClose();
@@ -95,7 +99,11 @@ function ModalWrapper({ isOpen, onClose }) {
           <Button mr={3} onClick={onClose} variant='ghost'>
             Cancel
           </Button>
-          <Button colorScheme='green' onClick={handleSubmit}>
+          <Button
+            colorScheme='green'
+            onClick={handleSubmit}
+            isLoading={isLoading}
+          >
             Submit
           </Button>
         </ModalFooter>
