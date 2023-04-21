@@ -6,10 +6,9 @@ import { useEffect } from 'react';
 import { ImageState } from '../ImageContext';
 
 function Layout() {
-  const { ImageData, setImageData, searchText } = ImageState();
-  const url = 'http://localhost:5000/api/v1';
+  const { ImageData, setImageData, searchText, serverURL } = ImageState();
   useEffect(() => {
-    fetch(`${url}/images/all`)
+    fetch(`${serverURL}/images/all`)
       .then((res) => res.json())
       .then((data) => setImageData(data.images));
   }, []);
