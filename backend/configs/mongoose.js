@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export default function () {
   mongoose
-    .connect('mongodb://127.0.0.1:27017', {
+    .connect(process.env.MONGO_URL, {
       dbName: 'unsplash',
     })
     .then(() => console.log('db connected'))

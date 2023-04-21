@@ -2,11 +2,11 @@ import { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types'; // ES6
 const Image = createContext({
   ImageData: [],
-  serverURL: 'http://localhost:5000/api/v1',
+  serverURL: 'https://unsplash-n7zv.onrender.com/api/v1',
   searchText: '',
 });
 function ImageContextProvider({ children }) {
-  const serverURL = 'http://localhost:5000/api/v1';
+  const serverURL = 'https://unsplash-n7zv.onrender.com/api/v1';
   const [ImageData, setImageData] = useState([]);
   const [searchText, setSearchText] = useState('');
   return (

@@ -1,5 +1,7 @@
 import { config } from 'dotenv';
-config({});
+config({
+  path: './configs/configs.env',
+});
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
